@@ -1,0 +1,57 @@
+
+<head>
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,300,100,700" rel="stylesheet" type="text/css">
+
+	
+     
+
+</head>
+<body>
+
+    INDEX
+
+	<div id="container">
+    </div>
+    <script>
+    
+    var $ = require('jquery');
+    var _ = require('backbone/node_modules/underscore');
+    var backbone = require('backbone');
+    
+    
+    
+    //create a totally empty model
+    var model = backbone.Model.extend({});
+    
+    
+    //create a totally empty view and stick a render callback on it
+    //which is called when the view is initialized
+    var view = backbone.View.extend({ 
+         el: '#container',
+               
+          initialize: function(){
+		  this.render();
+      },
+
+      render: function(){ 
+		console.log("renderedView");
+        this.$el.append("some cool view html from a template or something");
+      }
+        
+    });
+    
+    model = new model();
+    view1 = new view({model:model});
+    view2 = new view({model:model});
+    view3 = new view({model:model});
+
+    
+    console.log("we have loaded the index");
+    
+    
+    </script>
+</body>
+
+</html>

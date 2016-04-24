@@ -1,0 +1,17 @@
+{
+  "name": "ipclearningthing",
+  "version": "1.0.0",
+  "description": "a thing to learn about electron clients and c# webservers",
+  "main": "app.js",
+  "dependencies": {},
+  "devDependencies": {
+    "electron-prebuilt": "^0.37.6",
+    "backbone": "*",
+    "jquery": "*"
+  },
+  "scripts": {
+    "test": "electron ."
+  },
+  "author": "",
+  "license": "ISC"
+}
