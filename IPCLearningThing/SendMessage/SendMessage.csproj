@@ -45,6 +45,8 @@
     <Reference Include="System.Net" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Newtonsoft">
+          <HintPath>extern/jsonnet/Newtonsoft.Json.dll</HintPath> </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="program.cs" />

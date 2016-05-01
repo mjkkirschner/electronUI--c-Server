@@ -6,6 +6,8 @@ using System.Text;
 using SimpleWebServer;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+
 namespace SimpleWebServer
 {
     
@@ -114,12 +116,19 @@ namespace SimpleWebServer
 
 class Program
 {
+    
+    class testModel{
+        public int SomeNumber = 100;
+        public string name = "frank";
+        public List<int> nums = new List<int>(){1,2,3,5};
+    }
+    
     static void Main(string[] args)
     {
         
        var routes = new List<ResponsePair>();
-       routes.Add(new ResponsePair(new Uri[] {new Uri("http://localhost:8080/index/")},SendResponse));
-       routes.Add(new ResponsePair(new Uri[] {new Uri("http://localhost:8080/test/")},SendResponse));
+       routes.Add(new ResponsePair(new Uri[] {new Uri("http://localhost:8080/Models/")},SendModelsResponse));
+       routes.Add(new ResponsePair(new Uri[] {new Uri("http://localhost:8080/test/")},SendModelsResponse));
 
        
         WebServer ws = new WebServer(routes);
@@ -129,8 +138,16 @@ class Program
         ws.Stop();
     }
 
+
+
+
     public static string SendResponse(HttpListenerRequest request)
     {
         return string.Format("<HTML><BODY>My web page.<br>{0}</BODY></HTML>", DateTime.Now);
+    }
+    
+     public static string SendModelsResponse(HttpListenerRequest request)
+    {
+        return JsonConvert.SerializeObject(new List<testModel>(){new testModel(), new testModel(),new testModel()});
     }
 }

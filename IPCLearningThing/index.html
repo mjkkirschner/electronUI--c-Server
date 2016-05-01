@@ -19,11 +19,13 @@
     var $ = require('jquery');
     var _ = require('backbone/node_modules/underscore');
     var backbone = require('backbone');
-    
+    var http = require('http');    
     
     
     //create a totally empty model
-    var model = backbone.Model.extend({});
+    var model = backbone.Model.extend({
+        
+    });
     
     
     //create a totally empty view and stick a render callback on it
@@ -37,19 +39,55 @@
 
       render: function(){ 
 		console.log("renderedView");
-        this.$el.append("some cool view html from a template or something");
+        this.$el.append(String(JSON.stringify(this.model.attributes)) + "<br>");
+        console.log(this.model.attributes);  
       }
         
     });
+        
+    callback = function(response) {
+      var str = '';
+
+  //another chunk of data has been recieved, so append it to `str`
+  response.on('data', function (chunk) {
+        console.log(chunk);
+    str += chunk;
+  });
+
+  //the whole response has been recieved, so we just print it out here
+  //and handle it by creating some models....
+  response.on('end', function () {
+console.log("end of stream")
+console.log(str);
+CreateModelsFromResponse(str);
+  });
+  
+}
+ 
+ 
     
-    model = new model();
-    view1 = new view({model:model});
-    view2 = new view({model:model});
-    view3 = new view({model:model});
+CreateModelsFromResponse = function (str){
+    
+    var models = JSON.parse(str);
+backboneModels =  _.map(models,function(data) {return new model(data) });
+backboneViews = _.map(backboneModels, function(bbModel) {return new view({model : bbModel})});
+
+console.log(backboneModels.length);
+}    
+    
+    
+    
+//The url we want is: 'localhost:8080/'
+var options = {
+  host: 'localhost',
+  port:'8080',
+  path: '/Models/'
+};
+
+  http.request(options, callback).end();
 
     
-    console.log("we have loaded the index");
-    
+    console.log("we have loaded the index");    
     
     </script>
 </body>
